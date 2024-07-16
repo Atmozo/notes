@@ -1,0 +1,9 @@
+
+get url from my json data (info.js) file
+
+
+function getInfo() {
+        const InfoArray = InfoData.data.Info
+        const randomNumber = Math.floor(Math.random() * InfoArray.length)
+        const url = InfoArray[randomNumber].url
+        console.log(url)
