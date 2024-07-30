@@ -1,0 +1,140 @@
+CSS Cheat Sheet
+1. Selectors
+
+/* ID Selector */
+#id {}
+
+/* Class Selector */
+.class {}
+
+/* Element Selector */
+element {}
+
+/* Attribute Selector */
+[attribute=value] {}
+
+/* Pseudo-classes */
+element:hover {}
+element:focus {}
+
+/* Pseudo-elements */
+element::before {}
+element::after {}
+2. Box Model
+
+element {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid black;
+    margin: 10px;
+}
+3. Positioning
+
+/* Static Positioning */
+.element {
+    position: static;
+}
+
+/* Relative Positioning */
+.element {
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+
+/* Absolute Positioning */
+.element {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+/* Fixed Positioning */
+.element {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+/* Sticky Positioning */
+.element {
+    position: sticky;
+    top: 0;
+}
+4. Flexbox
+
+.container {
+    display: flex;
+    flex-direction: row; /* row, row-reverse, column, column-reverse */
+    justify-content: flex-start; /* flex-start, flex-end, center, space-between, space-around */
+    align-items: stretch; /* stretch, flex-start, flex-end, center, baseline */
+}
+5. Grid
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+.item {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+6. Typography
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+p {
+    margin-bottom: 1em;
+}
+7. Backgrounds
+
+.element {
+    background-color: #f0f0f0;
+    background-image: url('image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+8. Borders
+.element {
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+9. Transitions
+
+.element {
+    transition: all 0.3s ease-in-out;
+}
+
+.element:hover {
+    transform: scale(1.1);
+}
+10. Animations
+@keyframes example {
+    0% { background-color: red; }
+    100% { background-color: yellow; }
+}
+
+.element {
+    animation: example 5s infinite;
+}
+11. Media Queries
+
+@media (max-width: 600px) {
+    .element {
+        display: none;
+    }
+}
