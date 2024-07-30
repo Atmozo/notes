@@ -1,33 +1,387 @@
 REACT render 📓
-
 Reactdom📓
-
-
 REACT PROPS📓
-
-
-
 JSX 📓
-
-
-
-
 REACT STATE📓
-
-
-
-
 PROPS VS🔁 STATE
-
-
-
-
 JS.FUNCTIONS
 get url from my json data (info.js) file
-
-
 function getInfo() {
         const InfoArray = InfoData.data.Info
         const randomNumber = Math.floor(Math.random() * InfoArray.length)
         const url = InfoArray[randomNumber].url
         console.log(url)
+
+  
+CHEAT SHEET TO READ DAILY 
+
+React Cheat Sheet
+
+1. Setup
+npx create-react-app my-app
+cd my-app
+npm start
+
+2. Components
+import React from 'react';
+
+function App() {
+    return <h1>Hello, world!</h1>;
+}
+
+export default App;
+
+3. Props
+function Welcome(props) {
+    return <h1>Hello, {props.name}</h1>;
+}
+
+function App() {
+    return <Welcome name="Sara" />;
+}
+
+4. State
+import React, { useState } from 'react';
+
+function App() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>Click me</button>
+        </div>
+    );
+}
+
+5. Lifecycle Methods (Class Components)
+import React, { Component } from 'react';
+
+class App extends Component {
+    componentDidMount() {
+        // Called after the component is mounted
+    }
+
+    componentDidUpdate() {
+        // Called after the component updates
+    }
+
+    componentWillUnmount() {
+        // Called before the component is unmounted
+    }
+
+    render() {
+        return <h1>Hello, world!</h1>;
+    }
+}
+
+6. useEffect Hook
+import React, { useState, useEffect } from 'react';
+
+function App() {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+    }, [count]);
+
+    return (
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>Click me</button>
+        </div>
+    );
+}
+
+7. Conditional Rendering
+function App() {
+    const isLoggedIn = true;
+    return (
+        <div>
+            {isLoggedIn ? <h1>Welcome back!</h1> : <h1>Please sign up.</h1>}
+        </div>
+    );
+}
+
+8. Lists and Keys
+function App() {
+    const numbers = [1, 2, 3, 4, 5];
+    return (
+        <ul>
+            {numbers.map((number) => (
+                <li key={number}>{number}</li>
+            ))}
+        </ul>
+    );
+}
+
+9. Forms
+import React, { useState } from 'react';
+
+function App() {
+    const [value, setValue] = useState('');
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        alert('A name was submitted: ' + value);
+        event.preventDefault();
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                Name:
+                <input type="text" value={value} onChange={handleChange} />
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+    );
+}
+
+10. Context API
+const MyContext = React.createContext();
+
+function App() {
+    return (
+        <MyContext.Provider value="Hello, world!">
+            <Toolbar />
+        </MyContext.Provider>
+    );
+}
+
+function Toolbar() {
+    return (
+        <div>
+            <ThemedButton />
+        </div>
+    );
+}
+
+function ThemedButton() {
+    return (
+        <MyContext.Consumer>
+            {(value) => <button>{value}</button>}
+        </MyContext.Consumer>
+    );
+}
+
+11. useContext Hook
+import React, { useContext } from 'react';
+
+const MyContext = React.createContext();
+
+function App() {
+    return (
+        <MyContext.Provider value="Hello, world!">
+            <Toolbar />
+        </MyContext.Provider>
+    );
+}
+
+function Toolbar() {
+    return (
+        <div>
+            <ThemedButton />
+        </div>
+    );
+}
+
+function ThemedButton() {
+    const value = useContext(MyContext);
+    return <button>{value}</button>;
+}
+
+12. useReducer Hook
+import React, { useReducer } from 'react';
+
+const initialState = { count: 0 };
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'increment':
+            return { count: state.count + 1 };
+        case 'decrement':
+            return { count: state.count - 1 };
+        default:
+            throw new Error();
+    }
+}
+
+function App() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        <div>
+            <p>Count: {state.count}</p>
+            <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+            <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+        </div>
+    );
+}
+
+13. Custom Hooks
+import React, { useState, useEffect } from 'react';
+
+function useFriendStatus(friendID) {
+    const [isOnline, setIsOnline] = useState(null);
+
+    useEffect(() => {
+        function handleStatusChange(status) {
+            setIsOnline(status.isOnline);
+        }
+
+        // Assume we have a ChatAPI that subscribes to a friend's status
+        ChatAPI.subscribeToFriendStatus(friendID, handleStatusChange);
+        return () => {
+            ChatAPI.unsubscribeFromFriendStatus(friendID, handleStatusChange);
+        };
+    }, [friendID]);
+
+    return isOnline;
+}
+
+function FriendListItem({ friend }) {
+    const isOnline = useFriendStatus(friend.id);
+
+    return (
+        <li style={{ color: isOnline ? 'green' : 'black' }}>
+            {friend.name}
+        </li>
+    );
+}
+
+14. Higher-Order Components (HOC)
+import React from 'react';
+
+function withSubscription(WrappedComponent, selectData) {
+    return class extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                data: selectData(DataSource, props)
+            };
+        }
+
+        componentDidMount() {
+            DataSource.addChangeListener(this.handleChange);
+        }
+
+        componentWillUnmount() {
+            DataSource.removeChangeListener(this.handleChange);
+        }
+
+        handleChange = () => {
+            this.setState({
+                data: selectData(DataSource, this.props)
+            });
+        };
+
+        render() {
+            return <WrappedComponent data={this.state.data} {...this.props} />;
+        }
+    };
+}
+
+15. Error Boundaries
+import React from 'react';
+
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+    }
+
+    static getDerivedStateFromError(error) {
+        return { hasError: true };
+    }
+
+    componentDidCatch(error, info) {
+        // You can log the error to an error reporting service
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return <h1>Something went wrong.</h1>;
+        }
+
+        return this.props.children; 
+    }
+}
+
+function App() {
+    return (
+        <ErrorBoundary>
+            <MyComponent />
+        </ErrorBoundary>
+    );
+}
+
+16. Portals
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+function App() {
+    return ReactDOM.createPortal(
+        <div>
+            This is being rendered using a Portal!
+        </div>,
+        document.getElementById('portal-root')
+    );
+}
+
+17. Refs
+import React, { useRef } from 'react';
+
+function App() {
+    const inputEl = useRef(null);
+
+    const onButtonClick = () => {
+        inputEl.current.focus();
+    };
+
+    return (
+        <div>
+            <input ref={inputEl} type="text" />
+            <button onClick={onButtonClick}>Focus the input</button>
+        </div>
+    );
+}
+
+18. Fragments
+function App() {
+    return (
+        <React.Fragment>
+            <h1>Title</h1>
+            <p>This is a paragraph.</p>
+        </React.Fragment>
+    );
+}
+
+19. Strict Mode
+function App() {
+    return (
+        <React.StrictMode>
+            <MyComponent />
+        </React.StrictMode>
+    );
+}
+
+20. Code Splitting
+import React, { Suspense } from 'react';
+
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+function App() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <OtherComponent />
+        </Suspense>
+    );
+}
+"""
+
+# Split content into lines
+react_lines = react_content.split('\n')
