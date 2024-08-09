@@ -1,0 +1,13 @@
+install android studio......
+install SDK'S
+configure environmental variables  ......include pah configureration.
+create Vitual device
+install appium using nodes "npm install -g appium"
+to start appium server type "appium"
+settup usb debbuging
+To verify device cmd "adb devices"
+Settup vysor
+
+
+
+
